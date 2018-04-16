@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.security.security.model.dao.RoleDao">
+    <insert id="add" parameterType="com.security.security.model.entity.Role" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO role (id, name)
+        VALUES (#{id}, #{name})
+    </insert>
+
+    <update id="update" parameterType="com.security.security.model.entity.Role">
+        UPDATE role SET name = #{name} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="com.security.security.model.entity.Role">
+        DELETE FROM role WHERE id = #{id}
+    </delete>
+
+    <select id="getById" resultType="com.security.security.model.entity.Role">
+        SELECT * FROM role where id = #{id}
+    </select>
+
+    <select id="getByName" resultType="com.security.security.model.entity.Role">
+        SELECT * FROM role where name = #{name}
+    </select>
+
+    <select id="getAll" resultType="com.security.security.model.entity.Role">
+        SELECT * FROM role
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring Security Example </title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style>
+        .authForm{
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .authForm .form-control{
+            margin: 0.5em 0em;
+        }
+
+        .errorMessage{
+            text-align: center;
+            color: red;
+            padding-top: 0.5em;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 errorMessage">
+            <div th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-md-4"></div>
+        <div class="col-sm-4 col-md-4">
+            <form th:action="@{/login}" method="post" class="form-group authForm">
+                <div><input type="text" name="username" class="form-control" placeholder="Username"/></div>
+                <div><input type="password" name="password" class="form-control" placeholder="Password"/></div>
+                <div><input type="submit" value="Sign In" class="btn btn-primary form-control"/></div>
+            </form>
+        </div>
+        <div class="col-sm-4 col-md-4"></div>
+    </div>
+</div>
+</body>
+</html>

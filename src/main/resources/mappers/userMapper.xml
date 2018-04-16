@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.security.security.model.dao.UserDao">
+
+    <insert id="add" parameterType="com.security.security.model.entity.User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO user (id, username, password) VALUES (#{id}, #{username}, #{password})
+    </insert>
+
+    <update id="update" parameterType="com.security.security.model.entity.User">
+        UPDATE user SET
+        id = #{id},
+        username = #{username},
+        password = #{password}
+        WHERE
+        id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="com.security.security.model.entity.User">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+    <select id="getById" resultType="com.security.security.model.entity.User">
+        SELECT * FROM user where id = #{id}
+    </select>
+
+    <select id="getByUsername" resultType="com.security.security.model.entity.User">
+        SELECT * FROM user where username = #{username}
+    </select>
+
+    <insert id="addRoleMap">
+        INSERT INTO user_roles (user_id, role_id) VALUES (#{user_id}, #{role_id})
+    </insert>
+
+    <delete id="removeRoleMap" parameterType="com.security.security.model.entity.User">
+        DELETE FROM user_roles WHERE user_id = #{id}
+    </delete>
+
+    <select id="getAll" resultType="com.security.security.model.entity.User">
+        SELECT * FROM user
+    </select>
+
+    <select id="getRolesByUserId" resultType="com.security.security.model.entity.Role">
+        SELECT * FROM role WHERE id IN (SELECT role_id from db_security.user_roles where user_id = #{id})
+    </select>
+</mapper>

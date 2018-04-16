@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="1" author="prajyot">
+
+        <createTable tableName="user">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="role">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <addAutoIncrement columnDataType="int" columnName="id"
+                          incrementBy="1" startWith="100" tableName="user"/>
+
+        <addAutoIncrement columnDataType="int" columnName="id"
+                          incrementBy="1" startWith="100" tableName="role"/>
+
+        <createTable tableName="user_roles">
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_roles"
+                                 constraintName="user_user_role_rel"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="user_roles"
+                                 constraintName="role_user_role_rel"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role"/>
+
+        <!-- Add Default User -->
+        <insert tableName="user">
+            <column name="id" value="98"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$10$ImuiyHRkIZYPwKGANjeRqecL0JefjVmfOShUbugC2GGTQvnkFTuGy"/>
+        </insert>
+
+        <insert tableName="user">
+            <column name="id" value="99"/>
+            <column name="username" value="user"/>
+            <column name="password" value="$2a$10$m24rku4FpH4/i6Jx68FZK.86B5LiKLq8lAOCOxKURLxWj09EwWUQ2"/>
+        </insert>
+
+        <!-- Add Default Role -->
+        <insert tableName="role">
+            <column name="id" value="98"/>
+            <column name="name" value="ADMIN"/>
+        </insert>
+
+        <insert tableName="role">
+            <column name="id" value="99"/>
+            <column name="name" value="USER"/>
+        </insert>
+
+        <!-- Add Default Role Mapping -->
+        <insert tableName="user_roles">
+            <column name="user_id" value="98"/>
+            <column name="role_id" value="98"/>
+        </insert>
+
+        <insert tableName="user_roles">
+            <column name="user_id" value="99"/>
+            <column name="role_id" value="99"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
